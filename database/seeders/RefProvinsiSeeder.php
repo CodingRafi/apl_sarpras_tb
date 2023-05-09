@@ -15,9 +15,9 @@ class RefProvinsiSeeder extends Seeder
      */
     public function run()
     {
-        DB::unprepared(file_get_contents(app_path(). "/db_wilayah/ref_provinsis.sql"));
-        DB::unprepared(file_get_contents(app_path(). "/db_wilayah/ref_kabupatens.sql"));
-        DB::unprepared(file_get_contents(app_path(). "/db_wilayah/ref_kecamatans.sql"));
-        DB::unprepared(file_get_contents(app_path(). "/db_wilayah/ref_kelurahans.sql"));
+        // DB::unprepared(file_get_contents(app_path(). "/db_wilayah/ref_provinsis.sql"));
+        // DB::unprepared(file_get_contents(app_path(). "/db_wilayah/ref_kabupatens.sql"));
+        // DB::unprepared(file_get_contents(app_path(). "/db_wilayah/ref_kecamatans.sql"));
+        // DB::unprepared(file_get_contents(app_path(). "/db_wilayah/ref_kelurahans.sql"));
     }
 }
