@@ -121,7 +121,7 @@
     <meta name="author" content="LEFT4CODE">
     <title>Dashboard - Midone - Tailwind HTML Admin Template</title>
     <!-- BEGIN: CSS Assets-->
-    <link rel="stylesheet" href="dist/css/app.css" />
+    <link rel="stylesheet" href=" {{ asset('dist/css/app.css') }}" />
     <!-- END: CSS Assets-->
 </head>
 <body class="main">
@@ -136,7 +136,14 @@
              <!-- BEGIN: Side Menu -->
              @include('mypartials.aside')
              <!-- END: Side Menu -->
-             @yield('content')
+             <div class="content">
+                <div class="grid grid-cols-12 gap-6">
+                    <div class="col-span-12 2xl:col-span-9">
+                        @yield('content')
+                    </div>
+                </div>
+             </div>
+           
         </div>
     </div>
      
@@ -144,7 +151,7 @@
     <!-- BEGIN: JS Assets-->
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
-    <script src="dist/js/app.js"></script>
+    <script src="{{asset('dist/js/app.js')}}"></script>
     <!-- END: JS Assets-->
 </body>
 </html>

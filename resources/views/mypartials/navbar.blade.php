@@ -2,8 +2,8 @@
   <div class="h-full flex items-center">
       <!-- BEGIN: Logo -->
       <a href="" class="-intro-x hidden md:flex">
-          <img alt="Midone - HTML Admin Template" class="w-6" src="dist/images/logo.svg">
-          <span class="text-white text-lg ml-3"> Icewall </span> 
+          <img alt="Midone - HTML Admin Template" class="w-6" src="{{asset('dist/images/logo-tb.png')}}">
+          <span class="text-white text-lg ml-3"> Sarpras </span> 
       </a>
       <!-- END: Logo -->
       <!-- BEGIN: Breadcrumb -->
@@ -42,7 +42,7 @@
                   <div class="mb-5">
                       <a href="" class="flex items-center mt-2">
                           <div class="w-8 h-8 image-fit">
-                              <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-12.jpg">
+                              <img alt="Midone - HTML Admin Template" class="rounded-full" src="{{asset('dist/images/logo-tb.png')}}">
                           </div>
                           <div class="ml-3">Robert De Niro</div>
                           <div class="ml-auto w-48 truncate text-slate-500 text-xs text-right">robertdeniro@left4code.com</div>
@@ -110,7 +110,7 @@
                   <div class="notification-content__title">Notifications</div>
                   <div class="cursor-pointer relative flex items-center ">
                       <div class="w-12 h-12 flex-none image-fit mr-1">
-                          <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-12.jpg">
+                          <img alt="Midone - HTML Admin Template" class="rounded-full" src="{{asset('dist/images/logo-tb.png')}}">
                           <div class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white"></div>
                       </div>
                       <div class="ml-2 overflow-hidden">
@@ -180,7 +180,7 @@
       <!-- BEGIN: Account Menu -->
       <div class="intro-x dropdown w-8 h-8">
           <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in scale-110" role="button" aria-expanded="false" data-tw-toggle="dropdown">
-              <img alt="Midone - HTML Admin Template" src="dist/images/profile-2.jpg">
+              <img alt="Midone - HTML Admin Template" src="{{asset('dist/images/logo-tb.png')}}">
           </div>
           <div class="dropdown-menu w-56">
               <ul class="dropdown-content bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
@@ -207,7 +207,14 @@
                       <hr class="dropdown-divider border-white/[0.08]">
                   </li>
                   <li>
-                      <a href="" class="dropdown-item hover:bg-white/5"> <i data-lucide="toggle-right" class="w-4 h-4 mr-2"></i> Logout </a>
+                    <form action="/logout" method="post" class="logout">
+                        @csrf
+                        <button class="dropdown-item text-danger" tabindex="-1" type="submit"
+                          style="border: none; background: none; color: grey;">
+                          <i class="ti-power-off text-primary"></i>
+                          <i class="align-middle me-1" data-feather="log-out"></i> Logout
+                        </button>
+                      </form>
                   </li>
               </ul>
           </div>

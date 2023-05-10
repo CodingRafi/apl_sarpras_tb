@@ -10,9 +10,9 @@
           </a>
           <ul class="side-menu__sub-open">
               <li>
-                  <a href="side-menu-light-dashboard-overview-1.html" class="side-menu side-menu--active">
+                  <a href="/dashboard" class="side-menu side-menu--active">
                       <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                      <div class="side-menu__title"> Overview 1 </div>
+                      <div class="side-menu__title"> Dashboard 1 </div>
                   </a>
               </li>
               <li>
@@ -44,24 +44,76 @@
               </div>
           </a>
           <ul class="">
-              <li>
-                  <a href="side-menu-light-dashboard-overview-1.html" class="side-menu">
-                      <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                      <div class="side-menu__title"> Side Menu </div>
-                  </a>
+            @can('view_sekolah')
+            <li class="sidebar-item {{ Request::is('sekolah*') ? 'active' : '' }}">
+              <a class="sidebar-link" href="{{ route('sekolah.index') }}">
+                <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Sekolah</span>
+              </a>
+            </li>
+            @endcan 
+      
+             @can('view_pembayaran')
+            <li class="sidebar-item {{ Request::is('pembayaran*') ? 'active' : '' }}">
+              <a class="sidebar-link" href="{{ route('pembayaran.index') }}">
+                <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Pembayaran</span>
+              </a>
+            </li>
+            @endcan
+      
+            @if (auth()->user()->can('view_tahun_ajaran') || auth()->user()->can('view_agama') || auth()->user()->can('view_kelas'))
+            <li class="sidebar-header">
+              Data Master
+            </li>
+            @can('view_tahun_ajaran')
+            <li class="sidebar-item {{ Request::is('data-master/tahun-ajaran*') ? 'active' : '' }}">
+              <a class="sidebar-link" href="{{ route('tahun-ajaran.index') }}">
+                <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Tahun Ajaran</span>
+              </a>
+            </li>
+            @endcan
+            @can('view_agama')
+            <li class="sidebar-item {{ Request::is('data-master/agama*') ? 'active' : '' }}">
+              <a class="sidebar-link" href="{{ route('agama.index') }}">
+                <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Agama</span>
+              </a>
+            </li>
+            @endcan
+            @can('view_kelas')
+            <li class="sidebar-item {{ Request::is('data-master/kelas*') ? 'active' : '' }}">
+              <x-ButtonCustom class="sidebar-link btn-sidebar-self" route="{{ route('kelas.index') }}">
+                <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Kelas</span>
+              </x-ButtonCustom>
+            </li>
+            @endcan
+            @endif
+      
+            @can('view_users')
+            <li class="sidebar-header">
+              Data User
+            </li>
+            @foreach ($roles as $role)
+            @if ($role->name != 'admin' && $role->name != 'super_admin')
+              <li class="sidebar-item {{ Request::is('users/'.$role->name.'*') ? 'active' : '' }}">
+                <x-ButtonCustom class="sidebar-link btn-sidebar-self" route="/users/{{ $role->name }}">
+                  <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Data {{ str_replace("_", " ", $role->name) }}</span>
+                </x-ButtonCustom>
               </li>
-              <li>
-                  <a href="simple-menu-light-dashboard-overview-1.html" class="side-menu">
-                      <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                      <div class="side-menu__title"> Simple Menu </div>
-                  </a>
-              </li>
-              <li>
-                  <a href="top-menu-light-dashboard-overview-1.html" class="side-menu">
-                      <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                      <div class="side-menu__title"> Top Menu </div>
-                  </a>
-              </li>
+              @endif
+            @endforeach
+            @endcan
+      
+            @can(['view_roles'])
+            <li class="sidebar-header">
+              Hak Akses
+            </li>
+            @can('view_roles')
+            <li class="sidebar-item {{ Request::is('roles*') ? 'active' : '' }}">
+              <a class="sidebar-link" href="{{ route('roles.index') }}">
+                <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Roles</span>
+              </a>
+            </li>
+            @endcan
+            @endcan
           </ul>
       </li>
       <li>
@@ -609,15 +661,15 @@
         </x-ButtonCustom>
       </li>
 
-      {{-- @can('view_sekolah')
+       @can('view_sekolah')
       <li class="sidebar-item {{ Request::is('sekolah*') ? 'active' : '' }}">
         <a class="sidebar-link" href="{{ route('sekolah.index') }}">
           <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Sekolah</span>
         </a>
       </li>
-      @endcan --}}
+      @endcan 
 
-      {{-- @can('view_pembayaran')
+       @can('view_pembayaran')
       <li class="sidebar-item {{ Request::is('pembayaran*') ? 'active' : '' }}">
         <a class="sidebar-link" href="{{ route('pembayaran.index') }}">
           <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Pembayaran</span>
