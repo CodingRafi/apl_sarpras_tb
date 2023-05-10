@@ -1,24 +1,24 @@
 <nav class="side-nav">
   <ul>
       <li>
-          <a href="javascript:;.html" class="side-menu side-menu--active">
+          <a href="javascript:;.html" class="side-menu ">
               <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
               <div class="side-menu__title">
                   Dashboard 
-                  <div class="side-menu__sub-icon transform rotate-180"> <i data-lucide="chevron-down"></i> </div>
+                  <div class="side-menu__sub-icon"> <i data-lucide="chevron-down"></i> </div>
               </div>
           </a>
-          <ul class="side-menu__sub-open">
+          <ul class="">
               <li>
-                  <a href="/dashboard" class="side-menu side-menu--active">
+                  <a href="{{ route('dashboard') }}" class="side-menu ">
                       <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                       <div class="side-menu__title"> Dashboard 1 </div>
                   </a>
               </li>
               <li>
-                  <a href="index.html" class="side-menu">
+                  <a href="{{route('dashboard2')}}" class="side-menu">
                       <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                      <div class="side-menu__title"> Overview 2 </div>
+                      <div class="side-menu__title"> Dashboard 2 </div>
                   </a>
               </li>
               <li>
@@ -45,6 +45,7 @@
           </a>
           <ul class="">
             @can('view_sekolah')
+           
             <li class="sidebar-item {{ Request::is('sekolah*') ? 'active' : '' }}">
               <a class="sidebar-link" href="{{ route('sekolah.index') }}">
                 <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Sekolah</span>
@@ -79,11 +80,13 @@
             </li>
             @endcan
             @can('view_kelas')
-            <li class="sidebar-item {{ Request::is('data-master/kelas*') ? 'active' : '' }}">
-              <x-ButtonCustom class="sidebar-link btn-sidebar-self" route="{{ route('kelas.index') }}">
-                <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Kelas</span>
-              </x-ButtonCustom>
+            <li class="{{ Request::is('data-master/kelas*') ? 'active' : '' }}">
+                <a href="{{ route('kelas.index') }}" class="side-menu ">
+                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                    <div class="side-menu__title"> Sekolah </div>
+                </a>
             </li>
+
             @endcan
             @endif
       
@@ -93,11 +96,18 @@
             </li>
             @foreach ($roles as $role)
             @if ($role->name != 'admin' && $role->name != 'super_admin')
-              <li class="sidebar-item {{ Request::is('users/'.$role->name.'*') ? 'active' : '' }}">
+            <li class="{{ Request::is('users/'.$role->name.'*') ? 'active' : '' }}">
+                <a href="/users/{{ $role->name }}" class="side-menu ">
+                    <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                    <div class="side-menu__title"> Data {{ str_replace("_", " ", $role->name) }} </div>
+                </a>
+            </li>
+
+              {{-- <li class="sidebar-item {{ Request::is('users/'.$role->name.'*') ? 'active' : '' }}">
                 <x-ButtonCustom class="sidebar-link btn-sidebar-self" route="/users/{{ $role->name }}">
                   <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Data {{ str_replace("_", " ", $role->name) }}</span>
                 </x-ButtonCustom>
-              </li>
+              </li> --}}
               @endif
             @endforeach
             @endcan
@@ -644,8 +654,13 @@
           </ul>
       </li>
   </ul>
+  
 </nav>
 
+
+<script>
+    
+</script>
 
 
 {{-- <nav id="sidebar" class="sidebar js-sidebar">

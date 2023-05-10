@@ -41,4 +41,8 @@ class DashboardController extends Controller
         }
         return $result;
     }
+    
+    public function dash2(){
+        return view('dashboard2');
+    }
 }

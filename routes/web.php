@@ -41,6 +41,7 @@ Route::prefix('data-master')->group(function () {
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard2', [DashboardController::class, 'dash2'])->name('dashboard2');
     Route::resource('roles', RoleController::class);
 
     Route::get('edit/sekolah', [App\Http\Controllers\User\SekolahController::class, 'edit'])->name('sekolah.edit.own');

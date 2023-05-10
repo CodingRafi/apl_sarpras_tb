@@ -149,6 +149,22 @@
      
     
     <!-- BEGIN: JS Assets-->
+    <script>
+        const sideMenuLinks = document.querySelectorAll('.side-menu');
+    
+        sideMenuLinks.forEach(link => {
+            // cek apakah URL halaman saat ini sama dengan tautan menu
+            if (link.href === window.location.href) {
+                // tambahkan kelas "aktif" ke tautan menu
+                link.classList.add('side-menu--active');
+            }
+    
+        });
+       
+            
+    </script>
+    
+
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
     <script src="{{asset('dist/js/app.js')}}"></script>
