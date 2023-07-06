@@ -117,7 +117,7 @@ class ProdukController extends Controller
                     'tahun_ajaran_id' => $tahun_ajaran->id,
                     'sub_kategori_id' => $request->sub_kategori_id,
                     'nama' => ($request->name_increment ? ($request->start_increment ? ($request->nama . ' ' . $request->start_increment + $i) : ($request->nama . ' ' . $i)) : $request->nama),
-                    'kode' => $this->generate_kode($request, $sub_kategori->kode),
+                    'kode' => $this->generate_kode($request, $sub_kategori->kode).$i,
                     'merek' => $request->merek,
                     'kondisi' => $request->kondisi,
                     'ket_produk' => $request->ket_produk,
@@ -141,6 +141,7 @@ class ProdukController extends Controller
             DB::commit();
             return redirect()->route('produk.index')->with('msg_success', 'Berhasil menambahkan produk');
         } catch (\Throwable $th) {
+            return dd($th);
             DB::rollback();
             return redirect()->route('produk.index')->with('msg_error', 'Gagal Ditambahkan');
         }
