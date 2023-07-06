@@ -127,9 +127,8 @@ class SekolahController extends Controller
      */
     public function edit(Sekolah $sekolah)
     {
-        $sekolah = Sekolah::with('user')->find($sekolah->id);
+        $sekolah = Sekolah::findOrFail($sekolah->id);
         return view('sekolah.create', compact('sekolah'));
-        // abort(404);
     }
 
     /**
@@ -189,14 +188,9 @@ class SekolahController extends Controller
      */
     public function destroy(Sekolah $sekolah)
     {
-        foreach ($sekolah->user as $key => $user) {
-            User::deleteUser($user->getRoleNames()[0], $user->id);
-        }
-
-        foreach ($sekolah->kelas as $key => $kelas) {
-            $kelas->delete();
-        }
-
+        $sekolah->kelas()->delete();
+        $sekolah->kelas()->delete();
+        $sekolah->user->delete();
         $sekolah->delete();
 
         return redirect()->back()->with('msg_success', 'Sekolah berhasil dihapus');

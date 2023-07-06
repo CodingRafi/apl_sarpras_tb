@@ -85,7 +85,7 @@
                         <div class="col-span-12 2xl:col-span-6">
                             <div>
                                 <label for="update-profile-form-1" class="form-label ">Username</label>
-                                <input id="update-profile-form-1" type="text" class="form-control  @error('name') is-invalid @enderror"" placeholder="Input Username" name="name" value="{{ Auth::user()->name }}" >
+                                <input id="update-profile-form-1" type="text" class="form-control  @error('name') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"" placeholder="Input Username" name="name" value="{{ Auth::user()->name }}" >
                                 @error('name')
                                 <div class="invalid-feedback">
                                   {{ $message }}
@@ -94,7 +94,7 @@
                             </div>
                             <div class="mt-3">
                               <label for="update-profile-form-1" class="form-label">Email</label>
-                              <input name="email" id="update-profile-form-1" type="email" class="form-control  @error('email') is-invalid @enderror" placeholder="Input Email" value="{{ Auth::user()->email }}" value="{{ old('email') }}"  required>
+                              <input name="email" id="update-profile-form-1" type="email" class="form-control  @error('email') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" placeholder="Input Email" value="{{ Auth::user()->email }}" value="{{ old('email') }}"  required>
                               @error('name')
                               <div class="invalid-feedback">
                                 {{ $message }}

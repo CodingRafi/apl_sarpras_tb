@@ -1,4 +1,4 @@
-<div id="container-kelas" class="w-1/2"></div>
+<div id="container-kelas" class="w-full"></div>
 <script>
     Highcharts.chart('container-kelas', {
       chart: {

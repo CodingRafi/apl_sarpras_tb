@@ -22,23 +22,39 @@
         @endif
         <div id="vertical-form" class="p-5">
             <div class="preview">
-                <div>
-                    <label for="vertical-form-1" class="form-label">Judul</label>
-                    <input id="vertical-form-1" type="text" class="form-control" name="judul"
-                        value="{{ isset($data) ? $data->judul : old('judul') }}" placeholder="Judul">
+                <div class="mb-3">
+                    <label for="error"
+                        class="block mb-2 text-sm font-medium @error('judul') text-red-700 dark:text-red-500 @enderror">Judul</label>
+                    <input type="text"
+                        value="{{ isset($data) ? $data->judul : old('judul') }}"
+                        class="form-control @error('judul') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                        id="judul" name="judul">
+                    @error('judul')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                        {{ $message }}
+                    </p>
+                    @enderror
                 </div>
-                <div class="flex flex-col mt-5">
-                    <label for="konten">Konten</label>
-                    <textarea class="form-control mt-3 p-3" name="konten" id="konten" cols="10"
-                        rows="6">{{ isset($data) ? ($data->konten) : old('konten') }}</textarea>
+                <div class="mb-3">
+                    <label
+                        class="block mb-2 text-sm font-medium @error('konten') text-red-700 dark:text-red-500 @enderror"
+                        for="error">Konten</label>
+                    <textarea type="text"
+                        class="form-control @error('konten') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                        placeholder="Masukan konten" name="konten" style=" font-size: 15px;"
+                        id="konten">{{ isset($data) ? $data->konten : old('konten') }}</textarea>
+                    @error('konten')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                        {{ $message }}
+                    </p>
+                    @enderror
                 </div>
-                <button type="submit" class="btn btn-primary mt-5">Submit</button>
-                <a href="{{ route('jurusan.index') }}" class="btn px-5 ml-3">
-                    Cancel
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="{{ route('faq.index') }}" class="btn btn-danger px-5 ml-3">
+                    Kembali
                 </a>
             </div>
         </div>
     </form>
 </div>
-<!-- END: Vertical Form -->
 @endsection

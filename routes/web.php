@@ -67,11 +67,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::prefix('data-inventaris')->group(function () {
         Route::get('kategori/data/{id?}', [KategoriController::class, 'data'])->name('kategori.data');
         Route::resource('kategori', KategoriController::class);
+        Route::get('produk/qrcode/{kategori_id?}/{produk_id?}', [ProdukController::class, 'qrcode'])->name('produk.qrcode');
         Route::get('produk/data/{id?}', [ProdukController::class, 'data'])->name('produk.data');
         Route::delete('produk/hapus-foto', [ProdukController::class, 'hapus_foto'])->name('produk.hapus_foto');
         Route::resource('produk', ProdukController::class);
         Route::get('produk/{id}/detail', [ProdukController::class, 'detail'])->name('produk.detail');
         Route::get('ruang/data/{id?}', [RuangController::class, 'data'])->name('ruang.data');
+        Route::get('ruang/qrcode/{kategori_id?}/{produk_id?}', [RuangController::class, 'qrcode'])->name('ruang.qrcode');
         Route::post('ruang/tambah-produk', [RuangController::class, 'tambah_produk'])->name('ruang.tambah_produk');
         Route::post('ruang/hapus-produk', [RuangController::class, 'hapus_produk'])->name('ruang.hapus_produk');
         Route::get('ruang/{id}/produk', [RuangController::class, 'get_produk'])->name('ruang.produk');
@@ -112,6 +114,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('update/{id?}', [KategoriController::class, 'updateSub'])->name('update');
         Route::delete('delete/{id?}', [KategoriController::class, 'deleteSub'])->name('destroy');
     });
+    
     Route::get('getsub/{kategori_id?}', [KategoriController::class, 'getSub'])->name('get.sub');
     Route::get('produk/{sub_id}', [ProdukController::class, 'get'])->name('produk.get');
 

@@ -25,30 +25,31 @@ class DashboardController extends Controller
                 'countTahunAjaran' => $countTahunAjaran
             ];
         }else {
-            $sekolah_id = Auth::user()->sekolah_id;
+            $sekolah = Auth::user()->sekolah;
             $bulan = (int) request('bulan') ?? date('m');
             $tahun = (int) request('tahun') ?? date('Y');
             $return += [
                 'tahuns' => DB::table('peminjamans')->selectRaw('distinct(YEAR(created_at)) as year')->get(),
+                'sekolah' => $sekolah
             ]; 
 
-            // if (Auth::user()->can('view_produk')) {
-                $sub_terbanyak = Peminjaman::sub_terbanyak($sekolah_id, $bulan, $tahun);
+            if (Auth::user()->can('view_produk')) {
+                $sub_terbanyak = Peminjaman::sub_terbanyak($sekolah->id, $bulan, $tahun);
                 $return += [
-                    'total_produk' => DB::table('produks')->where('sekolah_id', $sekolah_id)->count(),
+                    'total_produk' => DB::table('produks')->where('sekolah_id', $sekolah->id)->count(),
                     'sub_terbanyak' => $this->parseData($sub_terbanyak),
                 ];
             // }
 
-            // if (Auth::user()->can('view_ruang')) {
+            if (Auth::user()->can('view_ruang')) {
                 $ruang_terbanyak = Peminjaman::ruang_terbanyak($sekolah_id, $bulan, $tahun);
                 $return += [
-                    'total_ruang' => DB::table('ruangs')->where('sekolah_id', $sekolah_id)->count(),
+                    'total_ruang' => DB::table('ruangs')->where('sekolah_id', $sekolah->id)->count(),
                     'ruang_terbanyak' => $this->parseData($ruang_terbanyak),
                 ];
             // }
 
-            // if (Auth::user()->can('view_kelas')) {
+            if (Auth::user()->can('view_kelas')) {
                 $kelas_terbanyak = Peminjaman::kelas_terbanyak($sekolah_id, $bulan, $tahun);
                 $return += [
                     'kelas_terbanyak' => $this->parseData($kelas_terbanyak),
@@ -57,14 +58,14 @@ class DashboardController extends Controller
 
             // if (Auth::user()->can('view_kategori')){
                 $return += [
-                    'total_kategori' => DB::table('kategoris')->where('sekolah_id', $sekolah_id)->count(),
+                    'total_kategori' => DB::table('kategoris')->where('sekolah_id', $sekolah->id)->count(),
                 ];
             // }
 
-            // if (Auth::user()->can('view_peminjaman')) {
+            if (Auth::user()->can('view_peminjaman')) {
                 $email_terbanyak = Peminjaman::email_terbanyak($sekolah_id, $bulan, $tahun);
                 $return += [
-                    'total_peminjaman' => DB::table('peminjamans')->where('peminjamans.sekolah_id', $sekolah_id)->count(),
+                    'total_peminjaman' => DB::table('peminjamans')->where('peminjamans.sekolah_id', $sekolah->id)->count(),
                     'email_terbanyak' => $this->parseData($email_terbanyak),
                 ];
             // }

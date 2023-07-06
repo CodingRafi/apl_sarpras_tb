@@ -1,125 +1,156 @@
 @extends('mylayouts.main')
 
 @section('content')
-<div class="card">
-    <div class="card-body">
-        <h4 class="card-title" style="color: #369488">Edit Profile</h4>
-        <form action="{{ route('sekolah.update.own') }}" method="post" enctype="multipart/form-data">
-            @csrf
-            @method('patch')
-            <div class="mb-3">
-                <label for="logo">Logo (opsional)</label>
-                <input class="form-control form-control-sm" type="file" id="logo" name="logo"
-                    style="border-radius: 5px; font-size: 15px;">
-            </div>
-            <div class="mb-3">
-                <label for="nama">Nama Sekolah</label>
-                <input class="form-control form-control-sm @error('nama') is-invalid @enderror" type="text"
-                    placeholder="Masukan Nama Sekolah" value="{{ $data->nama, old('nama') }}" name="nama" id="nama"
-                    style=" font-size: 15px;">
-                @error('nama')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div>
-                <h2 class="font-normal text-xs mr-auto mt-3">Kode Sekolah:</h2>
-                <input type="text"
-                    class="form-control @error('kode') is-invalid @enderror  "
-                    placeholder="Kode Sekolah" name="kode"
-                    style="border-radius: 5px; width: 100%" value="{{ old('kode') }}"
-                    required>
-                @error('kode')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="npsn">NPSN</label>
-                <input class="form-control form-control-sm @error('npsn') is-invalid @enderror" type="text"
-                    placeholder="Masukan NPSN" value="{{ $data->npsn, old('npsn') }}" name="npsn" id="npsn"
-                    style=" font-size: 15px;">
-                @error('npsn')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="kepala_sekolah">Nama Kepala Sekolah</label>
-                <input class="form-control form-control-sm @error('kepala_sekolah') is-invalid @enderror" type="text"
-                    placeholder="Masukan Nama Kepala Sekolah" value="{{ $data->kepala_sekolah, old('kepala_sekolah') }}"
-                    name="kepala_sekolah" id="kepala_sekolah" style=" font-size: 15px;">
-                @error('kepala_sekolah')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="ref_provinsi_id" class="form-label">Provinsi</label>
-                <select class="between-input-item-select form-control" name="ref_provinsi_id" id="ref_provinsi_id">
-                    <option value="">Pilih Provinsi</option>
-                    @foreach ($provinsis as $provinsi)
-                    <option value="{{ $provinsi->id }}" {{ isset($data) ? ($data->ref_provinsi_id == $provinsi->id ?
-                        'selected' : '') : (old('ref_provinsi_id') == $provinsi->id ? 'selected' : '') }}>{{
-                        $provinsi->nama }}</option>
-                    @endforeach
-                </select>
-                @error('ref_provinsi_id')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="ref_kabupaten_id" class="form-label">Kota/Kabupaten</label>
-                <select class="between-input-item-select form-select" name="ref_kabupaten_id" id="ref_kabupaten_id">
-                    <option value="">Pilih Kota/Kabupaten</option>
-                </select>
-                @error('ref_kabupaten_id')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="ref_kecamatan_id" class="form-label">Kecamatan</label>
-                <select class="between-input-item-select form-select" name="ref_kecamatan_id" id="ref_kecamatan_id">
-                    <option value="">Pilih Kecamatan</option>
-                </select>
-                @error('ref_kecamatan_id')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="ref_kelurahan_id" class="form-label">Kelurahan</label>
-                <select class="between-input-item-select form-select" name="ref_kelurahan_id" id="ref_kelurahan_id">
-                    <option value="">Pilih Kelurahan</option>
-                </select>
-                @error('ref_kelurahan_id')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="jalan" class="form-label">Jalan</label>
-                <input type="text" class="form-control @error('jalan') is-invalid @enderror" placeholder="Masukan Jalan"
-                    name="jalan" value="{{ isset($data) ? $data->jalan : old('jalan') }}" style=" font-size: 15px;"
-                    id="jalan">
-                @error('jalan')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <button class="btn btn-primary" type="submit">Update</button>
-        </form>
+<div class="intro-y box mt-5">
+    <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+        <h2 class="font-medium text-base mr-auto">
+            Edit Sekolah
+        </h2>
     </div>
+    <form class="p-5"
+        action="{{ route('sekolah.update.own') }}"
+        id="regForm" method="post" enctype="multipart/form-data">
+        @csrf
+        @if (isset($sekolah))
+        @method('patch')
+        @endif
+        <div class="grid grid-cols-12 gap-x-5">
+            <div class="col-span-12 xl:col-span-12">
+                <div class="mb-3">
+                    <label
+                        class="block mb-2 text-sm font-medium @error('nama_sekolah') text-red-700 dark:text-red-500 @enderror"
+                        for="error">Nama Sekolah:</label>
+                    <input type="text"
+                        class="form-control @error('nama_sekolah') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror  "
+                        placeholder="Nama Sekolah" name="nama_sekolah"
+                        style="border-radius: 5px; width: 100%"
+                        value="{{ isset($sekolah) ? $sekolah->nama : old('nama_sekolah') }}" required>
+                    @error('nama_sekolah')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label
+                        class="block mb-2 text-sm font-medium @error('kode') text-red-700 dark:text-red-500 @enderror"
+                        for="error">Kode Sekolah:</label>
+                    <input type="text"
+                        class="form-control @error('kode') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror  "
+                        placeholder="Kode Sekolah" name="kode" style="border-radius: 5px; width: 100%"
+                        value="{{ isset($sekolah) ? $sekolah->kode : old('kode') }}" required>
+                    @error('kode')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label
+                        class="block mb-2 text-sm font-medium @error('npsn') text-red-700 dark:text-red-500 @enderror"
+                        for="error">NPSN:</label>
+                    <input type="number"
+                        class="form-control @error('npsn') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                        placeholder="NPSN" name="npsn" style="border-radius: 5px; width: 100%"
+                        value="{{ isset($sekolah) ? $sekolah->npsn :old('npsn') }}" required>
+                    @error('npsn')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label
+                        class="block mb-2 text-sm font-medium @error('kepala_sekolah') text-red-700 dark:text-red-500 @enderror"
+                        for="error">Kepala Sekolah:</label>
+                    <input type="text"
+                        class="form-control @error('kepala_sekolah') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                        placeholder="Kepala Sekolah" name="kepala_sekolah"
+                        style="border-radius: 5px; width: 100%"
+                        value="{{ isset($sekolah) ? $sekolah->kepala_sekolah :old('kepala_sekolah') }}"
+                        required>
+                    @error('kepala_sekolah')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label
+                        class="block mb-2 text-sm font-medium @error('jenjang') text-red-700 dark:text-red-500 @enderror"
+                        for="error">Jenjang:</label>
+                    <select name="jenjang" id="jenjang"
+                        class="form-select text-dark form-control @error('jenjang') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                        style="border-radius: 5px;" required>
+                        <option value="">Pilih Jenjang</option>
+                        <option value="sd" {{ isset($sekolah)? ($sekolah->jenjang =='sd' ? 'selected' :
+                            '') : '' }}>SD</option>
+                        <option value="smp" {{ isset($sekolah)? ($sekolah->jenjang =='smp' ? 'selected'
+                            : '') : '' }}>SMP</option>
+                        <option value="sma" {{ isset($sekolah)? ($sekolah->jenjang =='sma' ? 'selected'
+                            : '') : '' }}>SMA</option>
+                        <option value="smk" {{ isset($sekolah)? ($sekolah->jenjang =='smk' ? 'selected'
+                            : '') : '' }}>SMK</option>
+                    </select>
+                    @error('jenjang')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label
+                        class="block mb-2 text-sm font-medium @error('alamat') text-red-700 dark:text-red-500 @enderror"
+                        for="error">Alamat:</label>
+                    <textarea type="text"
+                        class="form-control @error('alamat') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                        placeholder="Masukan alamat" name="alamat" style=" font-size: 15px;"
+                        id="alamat">{{ isset($sekolah) ? $sekolah->alamat : old('alamat') }}</textarea>
+                    @error('alamat')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label
+                        class="block mb-2 text-sm font-medium @error('jam_masuk') text-red-700 dark:text-red-500 @enderror"
+                        for="error">Jam Masuk:</label>
+                    <input type="time"
+                        class="form-control @error('jam_masuk') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                        placeholder="Masukan jam_masuk" name="jam_masuk"
+                        value="{{ isset($sekolah) ? $sekolah->jam_masuk : old('jam_masuk') }}"
+                        style=" font-size: 15px;" id="jam_masuk">
+                    @error('jam_masuk')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label
+                        class="block mb-2 text-sm font-medium @error('jam_pulang') text-red-700 dark:text-red-500 @enderror"
+                        for="error">Jam Pulang:</label>
+                    <input type="time"
+                        class="form-control @error('jam_pulang') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
+                        placeholder="Masukan jam_pulang" name="jam_pulang"
+                        value="{{ isset($sekolah) ? $sekolah->jam_pulang : old('jam_pulang') }}"
+                        style=" font-size: 15px;" id="jam_pulang">
+                    @error('jam_pulang')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <button class="btn btn-primary w-24" type="submit">Simpan</button>
+            <a href="{{ route('sekolah.index') }}">
+                <button type="button"
+                    class="btn btn-danger w-24 mr-1">Kembali</button>
+            </a>
+        </div>
+    </form>
 </div>
 @endsection

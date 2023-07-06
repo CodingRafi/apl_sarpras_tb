@@ -107,6 +107,7 @@ class PeminjamanController extends Controller
                             ->join('ruangs', 'ruangs.id', 'produks.ruang_id')
                             ->where('produks.sub_kategori_id', $request->id)
                             ->where('ruangs.produk_dipinjam', 1)
+                            ->where('produks.kondisi', 'B')
                             ->when(!$request->peminjaman_id, function($q) use($request){
                                 $q->where('produks.dipinjam', 0);
                             });
@@ -117,7 +118,7 @@ class PeminjamanController extends Controller
             $datas = $datas->when($request->peminjaman_id, function($q) use($request){
                 $q->whereHas('peminjaman', function(Builder $query) use($request){
                     $query->where('peminjaman_produk.peminjaman_id', $request->peminjaman_id);
-                })->orWhere('produks.dipinjam', 0);
+                })->orWhere('produks.dipinjam', 0)->where('produks.kondisi', 'B');
             })->get();
         }
 

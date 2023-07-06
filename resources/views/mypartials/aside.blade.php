@@ -15,7 +15,7 @@
     @can('view_sekolah')
     <li>
       <a href="{{ route('sekolah.index') }}" class="side-menu {{ Request::is('sekolah*') ? 'active' : '' }}">
-        <div class="side-menu__icon"> <i data-lucide="inbox"></i></div>
+        <div class="side-menu__icon"> <i data-lucide="activity"></i></div>
         <div class="side-menu__title">Sekolah</div>
       </a>
     </li>
@@ -73,7 +73,7 @@
           </a>
         </li>
         @endcan
-        @endif --}}
+        @endif --}} 
       </ul>
     </li>
     @endif

@@ -53,9 +53,9 @@
                 </div>
                 <div class="text-right mt-5">
                     <a href="{{ route('peminjamans.index') }}">
-                        <button type="button" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
+                        <button type="button" class="btn btn-outline-secondary w-24 mr-1">Kembali</button>
                     </a>
-                    <button class="btn btn-primary w-24" type="submit">Save</button>
+                    <button class="btn btn-primary w-24" type="submit">Simpan</button>
                 </div>
             </form>
         </div>

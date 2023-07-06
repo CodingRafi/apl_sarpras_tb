@@ -1,4 +1,4 @@
-<div id="container-email" class="w-1/2"></div>
+<div id="container-email" class="w-full"></div>
 
 <script>
     Highcharts.chart('container-email', {

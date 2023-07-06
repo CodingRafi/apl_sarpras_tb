@@ -26,7 +26,6 @@ class UserController extends Controller
          $this->middleware('permission:add_users', ['only' => ['create','store']]);
          $this->middleware('permission:edit_users', ['only' => ['edit','update']]);
          $this->middleware('permission:delete_users', ['only' => ['destroy']]);
-         $this->middleware('permission:edit_sekolah', ['only' => ['edit', 'update']]);
          $this->middleware('permission:import_users', ['only' => ['import', 'saveimport']]);
          $this->middleware('permission:export_users', ['only' => ['export']]);
     }
@@ -50,10 +49,12 @@ class UserController extends Controller
             'email' => $request->email,
             'nip' => $request->nip,
             'name' => $request->name,
+            'jk' => $request->jk,
+            'password' => $request->password ? Hash::make($request->password) : null
         ]);
 
         $user->assignRole($role);
-
+        insertLog(Auth::user()->name. " Berhasil menambahkan " . $role . ' dengan name '. $user->name);
         return redirect()->route('users.index', [$role])->with('msg_success', 'Berhasil menambahkan ' . $role);
     }
 
@@ -86,7 +87,12 @@ class UserController extends Controller
             'email' => $request->email,
             'nip' => $request->nip,
             'name' => $request->name,
+            'jk' => $request->jk,
         ];
+
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
+        }
         
         if ($request->file('profil')) {
             if($user->profil != '/img/profil.png'){
@@ -96,7 +102,7 @@ class UserController extends Controller
         }
         
         $user->update($data);
-
+        insertLog(Auth::user()->name. " Berhasil mengubah " . $role . ' dengan name '. $user->name);
         return TahunAjaran::redirectWithTahunAjaranManual(route('users.index', [$role]), $request,  'Berhasil mengupdate ' . $role);
     }
 
@@ -108,7 +114,16 @@ class UserController extends Controller
      */
     public function destroy(Request $request, $role, $id)
     {   
-        dd('perlu diperbaiki');
+        DB::beginTransaction();
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            DB::commit();
+            return redirect()->back()->with('msg_success', 'Berhasil dihapus');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('msg_success', 'Gagal dihapus');
+        }
     }
 
     public function import(Request $request, $role){
@@ -123,5 +138,10 @@ class UserController extends Controller
 
     public function export(Request $request, $role){
         return Excel::download(new UsersExport($role, $request), $role.'.xlsx');
+    }
+    
+    public function list(Request $request, $role){
+        $users = User::getUser($role, true, true, ['search' => $request->search]);
+        return response()->json($users, 200);
     }
 }

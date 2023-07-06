@@ -1,8 +1,7 @@
-@extends('mylayouts.guard')
+@extends('mylayouts.main')
 
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <style>
-  /* Mark input boxes that gets an error on validation: */
   input.invalid {
     background-color: #ffdddd;
   }
@@ -93,7 +92,7 @@
                 <h5>Data Sekolah</h5>
                 <div class="mb-3">
                   <label for="nama" class="form-label">Nama Sekolah</label>
-                  <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror  " placeholder="Nama Sekolah" name="nama_sekolah"
+                  <input type="text" class="form-control @error('nama_sekolah') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror  " placeholder="Nama Sekolah" name="nama_sekolah"
                     style="border-radius: 5px; width: 100%" value="{{ old('nama_sekolah') }}" required>
                     @error('nama_sekolah')
                     <div class="invalid-feedback">
@@ -103,7 +102,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="npsn" class="form-label">NPSN</label>
-                  <input type="number" class="form-control @error('npsn') is-invalid @enderror" placeholder="NPSN" name="npsn"
+                  <input type="number" class="form-control @error('npsn') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" placeholder="NPSN" name="npsn"
                     style="border-radius: 5px; width: 100%" value="{{ old('npsn') }}" required>
                     @error('npsn')
                     <div class="invalid-feedback">
@@ -113,7 +112,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="kepala_sekolah" class="form-label">Nama Kepala Sekolah</label>
-                  <input type="text" class="form-control @error('kepala_sekolah') is-invalid @enderror" placeholder="Kepala Sekolah"
+                  <input type="text" class="form-control @error('kepala_sekolah') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" placeholder="Kepala Sekolah"
                     name="kepala_sekolah" style="border-radius: 5px; width: 100%" value="{{ old('kepala_sekolah') }}" required>
                     @error('kepala_sekolah')
                     <div class="invalid-feedback">
@@ -123,7 +122,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="jenjang" class="form-label">Jenjang</label>
-                  <select name="jenjang" id="jenjang" class="text-dark form-control @error('jenjang') is-invalid @enderror"
+                  <select name="jenjang" id="jenjang" class="text-dark form-control @error('jenjang') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
                     style="border-radius: 5px;"
                     required>
                     <option value="">Pilih Jenjang</option>
@@ -146,14 +145,8 @@
                 <div class="row">
                   <div class="mb-3 col-lg-6">
                     <label for="ref_provinsi_id" class="form-label">Provinsi</label>
-                    <select class="between-input-item-select form-control @error('ref_provinsi_id') is-invalid @enderror" name="ref_provinsi_id" id="ref_provinsi_id">
+                    <select class="between-input-item-select form-control @error('ref_provinsi_id') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" name="ref_provinsi_id" id="ref_provinsi_id">
                       <option value="">Pilih Provinsi</option>
-                      @foreach ($provinsis as $provinsi)
-                      <option value="{{ $provinsi->id }}" {{ isset($data) ? ($data->ref_provinsi_id == $provinsi->id ?
-                        'selected' : '') : (old('ref_provinsi_id') == $provinsi->id ? 'selected' : '') }}>{{
-                        $provinsi->nama
-                        }}</option>
-                      @endforeach
                     </select>
                     @error('ref_provinsi_id')
                     <div class="invalid-feedback">
@@ -163,7 +156,7 @@
                   </div>
                   <div class="mb-3 col-lg-6">
                     <label for="ref_kabupaten_id" class="form-label">Kota/Kabupaten</label>
-                    <select class="between-input-item-select form-select @error('ref_kabupaten_id') is-invalid @enderror" name="ref_kabupaten_id" id="ref_kabupaten_id">
+                    <select class="between-input-item-select form-select @error('ref_kabupaten_id') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" name="ref_kabupaten_id" id="ref_kabupaten_id">
                       <option value="">Pilih Kota/Kabupaten</option>
                     </select>
                     @error('ref_kabupaten_id')
@@ -176,7 +169,7 @@
                 <div class="row">
                   <div class="mb-3 col-lg-6">
                     <label for="ref_kecamatan_id" class="form-label">Kecamatan</label>
-                    <select class="between-input-item-select form-select @error('ref_kecamatan_id') is-invalid @enderror" name="ref_kecamatan_id" id="ref_kecamatan_id">
+                    <select class="between-input-item-select form-select @error('ref_kecamatan_id') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" name="ref_kecamatan_id" id="ref_kecamatan_id">
                       <option value="">Pilih Kecamatan</option>
                     </select>
                     @error('ref_kecamatan_id')
@@ -187,7 +180,7 @@
                   </div>
                   <div class="mb-3 col-lg-6">
                     <label for="ref_kelurahan_id" class="form-label">Kelurahan</label>
-                    <select class="between-input-item-select form-select @error('ref_kelurahan_id') is-invalid @enderror" name="ref_kelurahan_id" id="ref_kelurahan_id">
+                    <select class="between-input-item-select form-select @error('ref_kelurahan_id') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" name="ref_kelurahan_id" id="ref_kelurahan_id">
                       <option value="">Pilih Kelurahan</option>
                     </select>
                     @error('ref_kelurahan_id')
@@ -199,7 +192,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="jalan" class="form-label">Jalan</label>
-                  <input type="text" class="form-control @error('jalan') is-invalid @enderror"
+                  <input type="text" class="form-control @error('jalan') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
                     placeholder="Masukan Jalan" name="jalan" value="{{ isset($data) ? $data->jalan : old('jalan') }}"
                     style=" font-size: 15px;" id="jalan">
                   @error('jalan')
@@ -214,7 +207,7 @@
                 <h5>Data user admin sekolah</h5>
                 <div class="mb-3">
                   <label for="name  " class="form-label">Nama admin sekolah</label>
-                  <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nama" name="name"
+                  <input type="text" class="form-control @error('name') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" placeholder="Nama" name="name"
                     style="border-radius: 5px; width: 100%" value="{{ old('name') }}" required>
                     @error('name')
                       <div class="invalid-feedback">
@@ -224,7 +217,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" name="email"
+                  <input type="email" class="form-control @error('email') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" placeholder="Email" name="email"
                     style="border-radius: 5px; width: 100%" value="{{ old('email') }}" required>
                     @error('email')
                       <div class="invalid-feedback">
@@ -234,7 +227,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="password" name="password" style="border-radius: 5px; width: 100%" required>
+                  <input type="password" class="form-control @error('password') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" placeholder="password" name="password" style="border-radius: 5px; width: 100%" required>
                   @error('password')
                     <div class="invalid-feedback">
                       {{ $message }}

@@ -19,9 +19,9 @@
                     <input id="vertical-form-2" type="text" class="form-control" name="nama"
                         value="{{ isset($data) ? $data->nama : old('nama') }}" placeholder="Kelas">
                 </div>
-                <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                <button type="submit" class="btn btn-primary mt-5">Simpan</button>
                 <a href="{{ route('kelas.index') }}" class="btn px-5 ml-3">
-                    Cancel
+                    Kembali
                 </a>
             </div>
         </div>

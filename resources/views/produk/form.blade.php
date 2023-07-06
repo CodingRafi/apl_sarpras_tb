@@ -124,11 +124,11 @@
                 </div>
                 @endif
         </div>
-        <div class="text-right mt-5">
-            <a href="{{ route('produk.index') }}">
-                <button type="button" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
+        <div class="mt-5">
+            <button type="submit" class="btn btn-primary w-24">Simpan</button>
+            <a href="{{ route('produk.index') }}" class="btn btn-danger w-24 mr-1">
+                Kembali
             </a>
-            <button type="submit" class="btn btn-primary w-24">Save</button>
         </div>
         </form>
     </div>

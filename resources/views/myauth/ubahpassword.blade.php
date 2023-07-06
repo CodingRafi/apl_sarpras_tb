@@ -12,7 +12,7 @@
         @method('patch')
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="name@example.com" name="email"
+          <input type="email" class="form-control @error('email') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" id="email" placeholder="name@example.com" name="email"
             style="width: 100%; height: 7vh;" value="{{ Auth::user()->email }}">
           @error('email')
           <div class="invalid-feedback">
@@ -22,7 +22,7 @@
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+          <input type="password" class="form-control @error('password') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror" id="password"
             name="password" placeholder="Masukan password baru" style="width: 100%; height: 7vh;">
           @error('password')
           <div class="invalid-feedback">
@@ -32,7 +32,7 @@
         </div>
         <div class="mb-3">
           <label for="confirm-password" class="form-label">Confirm Password</label>
-          <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
+          <input type="password" class="form-control @error('password_confirmation') bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500 @enderror"
             id="confirm-password" name="password_confirmation" placeholder="Konfirmasi password baru"
             style="width: 100%; height: 7vh;">
           @error('password_confirmation')

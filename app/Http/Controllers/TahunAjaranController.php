@@ -35,7 +35,7 @@ class TahunAjaranController extends Controller
      */
     public function create()
     {
-        return view('tahun-ajaran.create');
+        return view('tahun-ajaran.form');
     }
 
     /**
@@ -94,10 +94,11 @@ class TahunAjaranController extends Controller
      * @param  \App\Models\TahunAjaran  $tahunAjaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(TahunAjaran $tahunAjaran)
+    public function edit($id)
     {
-        return view('tahun-ajaran.update', [
-            'tahun_ajaran' => $tahunAjaran
+        $data = TahunAjaran::findOrFail($id);
+        return view('tahun-ajaran.form', [
+            'data' => $data
         ]);
     }
 
@@ -141,6 +142,14 @@ class TahunAjaranController extends Controller
      */
     public function destroy(TahunAjaran $tahunAjaran)
     {
-        abort(404);
+        DB::beginTransaction();
+        try {
+            $tahunAjaran->delete();
+            DB::commit();
+            return redirect()->back()->with('msg_success', 'Berhasil dihapus');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('msg_success', 'Gagal dihapus');
+        }
     }
 }

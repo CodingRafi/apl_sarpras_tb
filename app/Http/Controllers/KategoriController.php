@@ -49,6 +49,11 @@ class KategoriController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $action = '';
+                if ($data->jenis == 'sarana') {
+                    $action .= '<a class="btn btn-secondary btn-sm rounded mr-2" target="_blank" href="'. route('produk.qrcode', ['kategori_id' => $data->id]) .'">qrcode</a>';
+                }else{
+                    $action .= '<a class="btn btn-secondary btn-sm rounded mr-2" target="_blank" href="'. route('ruang.qrcode', ['kategori_id' => $data->id]) .'">qrcode</a>';
+                }
                 if (Auth::user()->can('edit_kategori')){
                     $action .= '<a class="btn btn-warning btn-sm rounded" href="'. route('kategori.edit', $data->id) .'">Edit</a>';
                 }

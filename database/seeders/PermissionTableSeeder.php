@@ -37,10 +37,10 @@ class PermissionTableSeeder extends Seeder
             'edit_sekolah',
             'delete_sekolah',
 
-            'view_jurusan',
-            'add_jurusan',
-            'edit_jurusan',
-            'delete_jurusan',
+            // 'view_jurusan',
+            // 'add_jurusan',
+            // 'edit_jurusan',
+            // 'delete_jurusan',
 
             'view_kategori',
             'add_kategori',

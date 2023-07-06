@@ -53,13 +53,53 @@
             </ul>
         </li>
         @endif
+
+        @if (auth()->user()->can('view_kategori') || auth()->user()->can('view_produk') ||
+        auth()->user()->can('view_ruang'))
+        <li class="menu__devider my-6"></li>
+        <li>
+            <a href="javascript:;" class="menu">
+                <div class="menu__icon"> <i data-lucide="Home"></i> </div>
+                <div class="menu__title">Data Inventaris <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
+            </a>
+            <ul class="">
+                @can('view_kategori')
+                <li>
+                    <a href="{{ route('kategori.index') }}" class="menu {{ Request::is('data-inventaris/kategori*') ? 'active' : '' }}">
+                        <div class="menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="menu__title"> Kategori </div>
+                    </a>
+                </li>
+                @endcan
+
+                @can('view_produk')
+                <li>
+                    <a href="{{ route('produk.index') }}" class="menu {{ Request::is('data-inventaris/produk*') ? 'active' : '' }}">
+                        <div class="menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="menu__title"> Produk </div>
+                    </a>
+                </li>
+                @endcan
+
+                @can('view_ruang')
+                <li>
+                    <a href="{{ route('ruang.index') }}" class="menu {{ Request::is('data-inventaris/ruang*') ? 'active' : '' }}">
+                        <div class="menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="menu__title"> Ruang </div>
+                    </a>
+                </li>
+                @endcan
+
+            </ul>
+        </li>
+        @endif
        
         @can('view_users')
         <li class="menu__devider my-6"></li>
         <li>
             <a href="javascript:;" class="menu">
                 <div class="menu__icon"> <i data-lucide="Home"></i> </div>
-                <div class="menu__title">Data Master <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
+                <div class="menu__title">Data User <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
             </a>
             <ul class="">
                 @foreach ($roles as $role)
@@ -72,19 +112,26 @@
                 @endforeach
                 @endcan
                 
-                @can(['view_roles'])
-                <li>
-                    <a href="{{ route('roles.index') }}" class="menu {{ Request::is('roles*') ? 'active' : '' }}">
-                        <div class="menu__icon"> <i data-lucide="inbox"></i> </div>
-                        <div class="menu__title"> Roles </div>
-                    </a>
-                </li>
-                @endcan
             </ul>
         </li>
-       
+        @can(['view_roles'])
+        <li>
+            <a href="{{ route('roles.index') }}" class="menu {{ Request::is('roles*') ? 'active' : '' }}">
+                <div class="menu__icon"> <i data-lucide="inbox"></i> </div>
+                <div class="menu__title"> Roles </div>
+            </a>
+        </li>
+        @endcan
+        @can('view_peminjaman')
+        <li>
+          <a href="{{ route('peminjamans.index') }}" class="menu {{ Request::is('peminjamans*') ? 'active' : '' }}">
+            <div class="menu__icon"><i data-lucide="home"></i></div>
+            <div class="menu__title">Peminjaman</div>
+          </a>
+        </li>
+        @endcan
 
-        @if ( !Auth::user()->hasRole('super_admin') && (Auth::user()->sekolah->jenjang == 'smk' || Auth::user()->sekolah->jenjang == 'sma'))
+        {{-- @if ( !Auth::user()->hasRole('super_admin') && (Auth::user()->sekolah->jenjang == 'smk' || Auth::user()->sekolah->jenjang == 'sma'))
         @can(['view_jurusan'])
         <li>
             <a href="{{ route('jurusan.index') }}" class="menu menu--active {{ Request::is('jurusan*') ? 'active' : '' }}"">
@@ -94,23 +141,16 @@
             
         </li>
         @endcan
-    @endif
-    @can(['view_kategori'])
+        @endif --}}
+    {{-- @can(['view_kategori'])
     <li>
         <a href="{{ route('kategori.index') }}" class="menu menu--active {{ Request::is('kategori*') ? 'active' : '' }}">
             <div class="menu__icon"> <i data-lucide="box"></i> </div>
             <div class="menu__title">Kategori</div>
         </a>
     </li>
-    @endcan
-    @can(['view_produk'])
-    <li>
-        <a href="{{ route('produk.index') }}" class="menu menu--active {{ Request::is('produk*') ? 'active' : '' }}">
-            <div class="menu__icon"> <i data-lucide="box"></i> </div>
-            <div class="menu__title">Produk</div>
-        </a>
-    </li>
-    @endcan
+    @endcan --}}
+    
     </ul>
 </div>
 <!-- END: Mobile Menu -->

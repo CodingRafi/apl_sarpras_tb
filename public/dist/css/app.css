@@ -10999,7 +10999,7 @@ html body {
     position: relative
 }
 
-.report-box:before {
+/* .report-box:before {
     --tw-bg-opacity: 1;
     background-color: rgb(var(--color-slate-50)/var(--tw-bg-opacity));
     border-radius: .375rem;
@@ -11013,7 +11013,7 @@ html body {
     position: absolute;
     right: 0;
     width: 90%
-}
+} */
 
 .dark .report-box:before {
     background-color: rgb(var(--color-darkmode-400)/.7)

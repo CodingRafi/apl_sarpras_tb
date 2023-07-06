@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function scopeFilterUser($query, array $filter){
         $query->when($filter['search'] ?? false, function($query, $filter){
-            return $query->where('profile_users.name', 'like', '%' . $filter . '%')
+            return $query->where('users.name', 'like', '%' . $filter . '%')
                         ->orWhere('users.email', 'like', '%' . $filter . '%')
                         ->orWhere('users.nip', 'like', '%' . $filter . '%');
         });

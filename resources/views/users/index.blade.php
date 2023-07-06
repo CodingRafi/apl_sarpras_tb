@@ -56,14 +56,14 @@
                                     <form action="{{ route('users.shows', ['role' => $role, 'id' => $user->id]) }}"
                                         method="get">
                                         @include('mypartials.tahunajaran')
-                                        <button class="btn btn-sm btn-primary rounded"
+                                        <button class="btn btn-sm btn-primary rounded mb-2"
                                             style="width: 4rem;">Detail</button>
                                     </form>
                                     @if (auth()->user()->can('edit_users'))
                                     <form action="{{ route('users.edit', ['role' => $role, 'id' => $user->id]) }}"
                                         method="get">
                                         @include('mypartials.tahunajaran')
-                                        <button class="btn btn-sm btn-warning rounded mt-2 mb-2"
+                                        <button class="btn btn-sm btn-warning rounded mb-2"
                                             style="width: 4rem;">Edit</button>
                                     </form>
                                     @endif
@@ -93,9 +93,6 @@
         let role = '{{ request("role") }}';
         let form = new FormData();
         form.set('search', search.val());
-        form.set('kelas', kelas.val());
-        form.set('tahun_awal', "{{ request('tahun_awal') }}");
-        form.set('tahun_akhir', "{{ request('tahun_akhir') }}");
 
         $.ajax({
             type: "POST",
@@ -126,12 +123,12 @@
                                 <div class="d-flex flex-wrap gap-2">
                                     <form action="/users/${role}/${e.id}" method="get">
                                         @include('mypartials.tahunajaran')
-                                        <button class="btn btn-sm btn-primary rounded" style="width: 4rem;">Detail</button>
+                                        <button class="btn btn-sm btn-primary rounded mb-2" style="width: 4rem;">Detail</button>
                                     </form>
                                     @if (auth()->user()->can('edit_users'))
                                     <form action="/users/${role}/${e.id}/edit" method="get">
                                         @include('mypartials.tahunajaran')
-                                        <button class="btn btn-sm btn-warning rounded" style="width: 4rem;">Edit</button>
+                                        <button class="btn btn-sm btn-warning rounded mb-2" style="width: 4rem;">Edit</button>
                                     </form>
                                     @endif
                                     @if (auth()->user()->can('delete_users'))

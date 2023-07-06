@@ -9,6 +9,8 @@ use App\Models\Produk;
 use App\Models\Ruang;
 use Illuminate\Http\Request;
 use Auth, DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class RuangController extends Controller
 {
@@ -49,7 +51,7 @@ class RuangController extends Controller
                 return $data->dipinjam ? 'Ya' : 'Tidak';
             })
             ->addColumn('action', function ($data) {
-                $action = '<a class="btn btn-primary btn-sm rounded mr-2" href="'. route('ruang.show', $data->id) .'">Detail</a>';
+                $action = '<a class="btn btn-secondary btn-sm rounded mr-2" target="_blank" href="'. route('ruang.qrcode', ['kategori_id' => 'empty', 'produk_id' => $data->id]) .'">qrcode</a><a class="btn btn-primary btn-sm rounded mr-2" href="'. route('ruang.show', $data->id) .'">Detail</a>';
                 if (Auth::user()->can('edit_ruang')){
                     $action .= '<a class="btn btn-warning btn-sm rounded" href="'. route('ruang.edit', $data->id) .'">Edit</a>';
                 }
@@ -215,5 +217,24 @@ class RuangController extends Controller
         return response()->json([
             'message' => 'Berhasil dihapus'
         ], 200);
+    }
+
+    public function qrcode($kategori_id = null, $produk_id = null){
+        ini_set('memory_limit', '2048M');
+        ini_set('max_execution_time', 60000);
+        $datas = Ruang::when($kategori_id == 'empty' && $produk_id, function($q) use($kategori_id, $produk_id){
+            $q->where('id', $produk_id);
+        })->when($kategori_id != 'empty', function($q) use($kategori_id , $produk_id){
+            $q->where('kategori_id', $kategori_id);
+        })->get()->toArray();
+
+        foreach ($datas as $key => $produk) {
+            $datas[$key]['qrcode'] = '<img src="data:image/png;base64,'. base64_encode(QrCode::format('svg')->size(160)->errorCorrection('H')->generate(route('ruang.detail.public', encodeText($produk['id'])))) .'">';
+        }
+
+        $datas = array_chunk($datas, 4);
+
+        $pdf = Pdf::loadView('ruang.qrcode', compact('datas'));
+        return $pdf->stream();
     }
 }

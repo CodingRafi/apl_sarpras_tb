@@ -389,6 +389,8 @@ input[type="checkbox"] {
 
 .faq{
     padding: 45px;
+    width: 90%;
+    margin: auto;
 }
 
 

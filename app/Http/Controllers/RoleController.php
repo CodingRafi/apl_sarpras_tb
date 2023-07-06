@@ -25,7 +25,6 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $roles = Role::where('name', '!=', 'super_admin')->get();
-        // $roles = Role::all();
         $rolePermissions = [];
 
         foreach ($roles as $role) {
@@ -45,7 +44,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        abort(404);
+        $permissions = Permission::get();
+        return view('roles.form',compact('permissions'));
     }
 
     /**
@@ -94,7 +94,7 @@ class RoleController extends Controller
                             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
                             ->all();
     
-        return view('roles.update',compact('data','permissions','rolePermissions'));
+        return view('roles.form',compact('data','permissions','rolePermissions'));
     }
 
     /**
@@ -107,15 +107,10 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
             'permission' => 'required'
         ]);
 
-        $role = Role::find($id);
-        //? kenapa tidak pakai updaye karena yang kita ubah hanya nama rolenya saja, dan untuk coloum yang lain seperti guard_name kan tidak ada berarti jika tidak ada nanti ketika di update akan error 
-        $role->name = $request->name;
-        $role->save();
-
+        $role = Role::findOrFail($id);
         $role->syncPermissions($request->permission);
     
         return redirect()->route('roles.index')

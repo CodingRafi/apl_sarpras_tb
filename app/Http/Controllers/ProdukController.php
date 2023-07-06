@@ -14,6 +14,8 @@ use App\Models\Kategori;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProdukController extends Controller
 {
@@ -53,7 +55,7 @@ class ProdukController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $action = '';
-                $action .= '<a class="btn btn-primary btn-sm rounded mr-2" href="'. route('produk.show', $data->id) .'">Detail</a>';
+                $action .= '<a class="btn btn-secondary btn-sm rounded mr-2" target="_blank" href="'. route('produk.qrcode', ['kategori_id' => 'empty', 'produk_id' => $data->id]) .'">qrcode</a><a class="btn btn-primary btn-sm rounded mr-2" href="'. route('produk.show', $data->id) .'">Detail</a>';
                 if (Auth::user()->can('edit_produk')){
                     $action .= '<a class="btn btn-warning btn-sm rounded" href="'. route('produk.edit', $data->id) .'">Edit</a>';
                 }
@@ -310,5 +312,24 @@ class ProdukController extends Controller
         return response()->json([
             'message' => 'Berhasil dihapus'
         ], 200);
+    }
+
+    public function qrcode($kategori_id = null, $produk_id = null){
+        ini_set('memory_limit', '2048M');
+        ini_set('max_execution_time', 60000);
+        $produks = Produk::when($kategori_id == 'empty' && $produk_id, function($q) use($kategori_id, $produk_id){
+            $q->where('id', $produk_id);
+        })->when($kategori_id != 'empty', function($q) use($kategori_id , $produk_id){
+            $q->where('kategori_id', $kategori_id);
+        })->get()->toArray();
+
+        foreach ($produks as $key => $produk) {
+            $produks[$key]['qrcode'] = '<img src="data:image/png;base64,'. base64_encode(QrCode::format('svg')->size(160)->errorCorrection('H')->generate(route('produk.detail.public', encodeText($produk['id'])))) .'">';
+        }
+
+        $produks = array_chunk($produks, 4);
+
+        $pdf = Pdf::loadView('produk.qrcode', compact('produks'));
+        return $pdf->stream();
     }
 }

@@ -139,7 +139,7 @@
                 </div>
               </div>
             </div>
-          </div><!-- End // .slider -->
+        </div><!-- End // .slider -->
           
           <!-- <div class="slide_buttons">
           </div> -->

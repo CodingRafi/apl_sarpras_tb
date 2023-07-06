@@ -24,8 +24,7 @@ class SekolahController extends Controller
     }
 
     public function create(){
-        $provinsis = DB::table('ref_provinsis')->get();
-        return view('myauth.register', compact('provinsis'));
+        return view('myauth.register');
     }
     
     public function store(StoreSekolahRegRequest $request)
@@ -63,33 +62,22 @@ class SekolahController extends Controller
     }
 
     public function edit(){
-        $provinsis = DB::table('ref_provinsis')->get();
-        $data = Auth::user()->sekolah;
-        return view('sekolah.edit', compact('provinsis', 'data'));
+        $sekolah = Auth::user()->sekolah;
+        return view('sekolah.edit', compact('sekolah'));
     }
 
     public function update(Request $request){
         $validatedData = $request->validate([
-            'nama' => 'required',
+            'nama_sekolah' => 'required',
+            'kode' => 'required',
             'npsn' => 'required',
-            'ref_provinsi_id' => 'required',
-            'ref_kabupaten_id' => 'required',
-            'ref_kecamatan_id' => 'required',
-            'ref_kelurahan_id' => 'required',
-            'jalan' => 'required',
-            'logo' => 'mimes:jpg,jpeg,png|file|max:5024',
-            'kepala_sekolah' => 'nullable',
+            'kepala_sekolah' => 'required',
+            'alamat' => 'required',
+            'jam_masuk' => 'required',
+            'jam_pulang' => 'required',
         ]);
 
         $sekolah = Auth::user()->sekolah;
-
-        if ($request->logo) {
-            if ($sekolah->logo != '/img/tutwuri.png	') {
-                Storage::delete($sekolah->logo);
-            }
-            $validatedData += ['logo' => $request->file('logo')->store('logo')];
-        }
-
         $sekolah->update($validatedData);
 
         return redirect()->route('dashboard')->with('msg_success', 'Data Sekolah Berhasil Terupdate');

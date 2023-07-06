@@ -222,7 +222,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="crud-form-1" class="form-label">Luas</label>
+                        <label for="crud-form-1" class="form-label">Luas (m²)</label>
                         <input id="crud-form-1" type="number" class="form-control w-full" name="luas"
                             value="{{ isset($data) ? $data->luas : old('luas') }}" placeholder="Luas Tahan">
                     </div>
