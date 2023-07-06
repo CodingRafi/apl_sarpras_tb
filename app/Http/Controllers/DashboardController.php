@@ -39,36 +39,36 @@ class DashboardController extends Controller
                     'total_produk' => DB::table('produks')->where('sekolah_id', $sekolah->id)->count(),
                     'sub_terbanyak' => $this->parseData($sub_terbanyak),
                 ];
-            }
+            // }
 
             if (Auth::user()->can('view_ruang')) {
-                $ruang_terbanyak = Peminjaman::ruang_terbanyak($sekolah->id, $bulan, $tahun);
+                $ruang_terbanyak = Peminjaman::ruang_terbanyak($sekolah_id, $bulan, $tahun);
                 $return += [
                     'total_ruang' => DB::table('ruangs')->where('sekolah_id', $sekolah->id)->count(),
                     'ruang_terbanyak' => $this->parseData($ruang_terbanyak),
                 ];
-            }
+            // }
 
             if (Auth::user()->can('view_kelas')) {
-                $kelas_terbanyak = Peminjaman::kelas_terbanyak($sekolah->id, $bulan, $tahun);
+                $kelas_terbanyak = Peminjaman::kelas_terbanyak($sekolah_id, $bulan, $tahun);
                 $return += [
                     'kelas_terbanyak' => $this->parseData($kelas_terbanyak),
                 ];
-            }
+            // }
 
-            if (Auth::user()->can('view_kategori')){
+            // if (Auth::user()->can('view_kategori')){
                 $return += [
                     'total_kategori' => DB::table('kategoris')->where('sekolah_id', $sekolah->id)->count(),
                 ];
-            }
+            // }
 
             if (Auth::user()->can('view_peminjaman')) {
-                $email_terbanyak = Peminjaman::email_terbanyak($sekolah->id, $bulan, $tahun);
+                $email_terbanyak = Peminjaman::email_terbanyak($sekolah_id, $bulan, $tahun);
                 $return += [
                     'total_peminjaman' => DB::table('peminjamans')->where('peminjamans.sekolah_id', $sekolah->id)->count(),
                     'email_terbanyak' => $this->parseData($email_terbanyak),
                 ];
-            }
+            // }
         }
 
         return view('dashboard', $return);
